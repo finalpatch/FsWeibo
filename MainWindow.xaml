@@ -4,48 +4,61 @@
         Title="" Height="700" Width="320">
 
     <Window.Resources>
+        
+        <Style x:Key="avatar" TargetType="Image">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+        </Style>
+        <Style x:Key="thumbnail" TargetType="Image">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="120"/>
+        </Style>
+        <Style x:Key="msgtxt" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <!-- no selection highlight -->
+        <Style x:Key="myLBStyle" TargetType="ListBoxItem">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                 Color="Transparent"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                                 Color="{x:Static SystemColors.WindowTextColor}"/>
+            </Style.Resources>
+        </Style>
+        
         <DataTemplate x:Key="MessageTemplate">
             <StackPanel>
                 <!-- user -->
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{Binding UserPic}" Width="32" Height="32"/>
+                    <Image Source="{Binding UserPic}" Style="{StaticResource avatar}"/>
                     <Label Content="{Binding User}" Foreground="Blue"/>
                 </StackPanel>
                 <!-- text -->
-                <Label>
-                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Padding="3"/>
-                </Label>
+                <TextBlock Text="{Binding Text}" Style="{StaticResource msgtxt}"/>
                 <!-- image -->
-                <Image MaxWidth="120" MaxHeight="120"
+                <Image Style="{StaticResource thumbnail}"
                        Source="{Binding SmallPic}"
                        Visibility="{Binding MediaVis}"/>
                 <!-- retweet -->
                 <Border BorderBrush="Gray" BorderThickness="1" Background="#f0f0f0" Margin="30,10,10,10"
-                                        Visibility="{Binding RetweetVis}">
+                        Visibility="{Binding RetweetVis}">
                     <StackPanel>
                         <!-- user -->
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Retweet.UserPic}" Width="32" Height="32"/>
+                            <Image Source="{Binding Retweet.UserPic}" Style="{StaticResource avatar}"/>
                             <Label Content="{Binding Retweet.User}" Foreground="Blue"/>
                         </StackPanel>
                         <!-- text -->
-                        <Label>
-                            <TextBlock Text="{Binding Retweet.Text}" TextWrapping="Wrap" Padding="3"/>
-                        </Label>
+                        <TextBlock Text="{Binding Retweet.Text}" Style="{StaticResource msgtxt}"/>
                         <!-- image -->
-                        <Image MaxWidth="120" MaxHeight="120" 
+                        <Image Style="{StaticResource thumbnail}"
                                Source="{Binding Retweet.SmallPic}" 
                                Visibility="{Binding Retweet.MediaVis}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
         </DataTemplate>
-        <!-- no selection background -->
-        <Style x:Key="myLBStyle" TargetType="{x:Type ListBoxItem}">
-            <Style.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-            </Style.Resources>
-        </Style>
     </Window.Resources>
 
     <DockPanel>
